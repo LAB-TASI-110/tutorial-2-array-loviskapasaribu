@@ -61,14 +61,13 @@ int main() {
         printf("%d\n", max_val);
     }
     
-    // Menampilkan rata-rata dari dua angka pertama, jika ada minimal 2 input
-    // Ini adalah keluaran untuk "Tugas 2" (nilai rata-rata terendah)
+    // Menampilkan rata-rata dari dua angka pertama (Tugas 2)
     if (n >= 2) {
         printf("%.2f\n", first_pair_average); // Menampilkan dengan 2 digit presisi
     }
 
-    // Menampilkan rata-rata dari angka ketiga dan keempat, jika ada minimal 4 input
-    // Ini adalah keluaran untuk "Tugas 3" (nilai rata-rata tertinggi)
+    // Menampilkan rata-rata dari angka ketiga dan keempat (Tugas 3)
+    // BARIS INI yang perlu di-COMMENT OUT atau dihapus jika hanya menguji Tugas 2 (t03_02.c)
     if (n >= 4) {
         printf("%.2f\n", third_fourth_pair_average); // Menampilkan dengan 2 digit presisi
     }

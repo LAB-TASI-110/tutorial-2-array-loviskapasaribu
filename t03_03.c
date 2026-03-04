@@ -74,12 +74,5 @@ int main() {
         printf("%.2f\n", min_consecutive_avg); // Rata-rata terendah dari pasangan berurutan
     }
 
-    // Baris 4: Tampilkan rata-rata pasangan tertinggi
-    // Baris ini HANYA diharapkan muncul pada t03_03.c.
-    // Jika Anda mengompilasi untuk t03_02.c, Anda harus MENGHAPUS atau MENGOMENTARI blok kode ini.
-    if (n >= 2) { // Kondisi yang sama, karena butuh setidaknya satu pasangan untuk min_consecutive_avg dan max_consecutive_avg
-        printf("%.2f\n", max_consecutive_avg); // Rata-rata tertinggi dari pasangan berurutan
-    }
-
     return 0; // Mengindikasikan program berakhir dengan sukses
 }

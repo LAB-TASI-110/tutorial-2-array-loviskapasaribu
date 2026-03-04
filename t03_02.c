@@ -66,11 +66,5 @@ int main() {
         printf("%.2f\n", first_pair_average); // Menampilkan dengan 2 digit presisi
     }
 
-    // Menampilkan rata-rata dari angka ketiga dan keempat (Tugas 3)
-    // BARIS INI yang perlu di-COMMENT OUT atau dihapus jika hanya menguji Tugas 2 (t03_02.c)
-    if (n >= 4) {
-        printf("%.2f\n", third_fourth_pair_average); // Menampilkan dengan 2 digit presisi
-    }
-
     return 0; // Mengindikasikan program berakhir dengan sukses
 }

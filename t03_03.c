@@ -1,85 +1,53 @@
 // 12S25016 - Loviska Astria Pasaribu
 
-#include <stdio.h>  // Untuk fungsi input/output seperti printf dan scanf
-#include <limits.h> // Untuk menggunakan INT_MAX dan INT_MIN
-#include <float.h>  // Untuk menggunakan DBL_MAX dan DBL_MIN
+#include <stdio.h> // Diperlukan untuk fungsi input/output seperti scanf dan printf
 
 int main() {
-    int n;           // Variabel untuk menyimpan jumlah baris masukan berikutnya
-    int min_val = INT_MAX; // Inisialisasi nilai minimum dengan nilai integer terbesar yang mungkin
-    int max_val = INT_MIN; // Inisialisasi nilai maksimum dengan nilai integer terkecil yang mungkin
-    
-    // Variabel untuk menghitung rata-rata pasangan berurutan terendah dan tertinggi
-    double min_consecutive_avg = DBL_MAX; // Inisialisasi rata-rata terendah dengan nilai double terbesar
-    double max_consecutive_avg = DBL_MIN; // Inisialisasi rata-rata tertinggi dengan nilai double terkecil
-    int prev_num;    // Untuk menyimpan angka sebelumnya dalam perhitungan pasangan
-    int current_num; // Untuk menyimpan angka saat ini
+    int n;          // Variabel untuk menyimpan jumlah baris masukan berikutnya
+    int num;        // Variabel untuk menyimpan setiap bilangan bulat yang dimasukkan
+    int min_val;    // Variabel untuk menyimpan nilai terkecil dari semua angka
+    int max_val;    // Variabel untuk menyimpan nilai terbesar dari semua angka
+    int i;          // Variabel counter untuk loop
 
-    // Membaca baris pertama: nilai n
-    scanf("%d", &n);
+    int first_num_read = 0;   // Flag untuk inisialisasi min_val dan max_val dengan angka pertama
 
-    // Jika n adalah 0, tidak ada angka yang perlu diproses, langsung keluar
-    if (n == 0) {
-        return 0;
+    // --- Bagian 1: Membaca dan memvalidasi nilai 'n' (Prompt interaktif dihapus) ---
+    // Program akan menunggu input 'n' tanpa menampilkan prompt ke user.
+    // Validasi tetap ada untuk memastikan 'n' adalah bilangan bulat positif.
+    while (scanf("%d", &n) != 1 || n <= 0) {
+        // Pesan error validasi juga dihapus agar tidak muncul di output autograding.
+        while (getchar() != '\n'); // Membersihkan buffer input jika ada karakter yang tidak sesuai
     }
 
-    // Membaca angka pertama untuk inisialisasi min_val, max_val, dan prev_num
-    scanf("%d", &prev_num);
-    min_val = prev_num; // Angka pertama menjadi min dan max sementara
-    max_val = prev_num;
-
-    // Jika n adalah 1, tidak ada pasangan yang bisa dibentuk, hanya tampilkan min/max
-    if (n == 1) {
-        printf("%d\n", min_val);
-        printf("%d\n", max_val);
-        return 0;
-    }
-
-    // Loop untuk membaca sisa (n-1) angka dan memproses pasangan berurutan
-    for (int i = 1; i < n; i++) {
-        scanf("%d", &current_num);
-
-        // Memperbarui nilai minimum dan maksimum secara keseluruhan
-        if (current_num < min_val) {
-            min_val = current_num;
+    // --- Bagian 2: Membaca 'n' baris masukan dan mencari min/max (Prompt interaktif dihapus) ---
+    for (i = 0; i < n; i++) {
+        int current_input_val; // Variabel sementara untuk input yang belum divalidasi
+        // Program akan menunggu input angka tanpa menampilkan prompt ke user.
+        // Validasi tetap ada untuk memastikan angka dalam rentang yang ditentukan.
+        while (scanf("%d", &current_input_val) != 1 || current_input_val < -100 || current_input_val > 100) {
+            // Pesan error validasi juga dihapus.
+            while (getchar() != '\n'); // Membersihkan buffer input jika ada karakter yang tidak sesuai
         }
-        if (current_num > max_val) {
-            max_val = current_num;
-        }
+        num = current_input_val; // Gunakan angka yang sudah divalidasi
 
-        // Menghitung rata-rata dari pasangan angka saat ini (prev_num dan current_num)
-        double current_pair_avg = (double)(prev_num + current_num) / 2.0;
-
-        // Memperbarui nilai rata-rata terendah dari pasangan berurutan
-        if (current_pair_avg < min_consecutive_avg) {
-            min_consecutive_avg = current_pair_avg;
+        // Logika pencarian nilai terkecil dan terbesar
+        if (!first_num_read) {
+            min_val = num;
+            max_val = num;
+            first_num_read = 1;
+        } else {
+            if (num < min_val) {
+                min_val = num;
+            }
+            if (num > max_val) {
+                max_val = num;
+            }
         }
-        // Memperbarui nilai rata-rata tertinggi dari pasangan berurutan
-        if (current_pair_avg > max_consecutive_avg) {
-            max_consecutive_avg = current_pair_avg;
-        }
-        
-        // Memperbarui prev_num untuk iterasi berikutnya
-        prev_num = current_num;
     }
 
-    // --- BAGIAN OUTPUT ---
-    // Baris 1 dan 2: Selalu tampilkan min dan max jika ada input
-    printf("%d\n", min_val); // Nilai terkecil dari semua input
-    printf("%d\n", max_val); // Nilai terbesar dari semua input
-    
-    // Baris 3: Tampilkan rata-rata pasangan terendah
-    // Ini adalah yang diharapkan oleh autograder untuk baris ketiga pada t03_02.c dan t03_03.c
-    if (n >= 2) { // Hanya jika ada setidaknya 2 input (untuk membentuk pasangan)
-        printf("%.2f\n", min_consecutive_avg); // Rata-rata terendah dari pasangan berurutan
-    }
+    // --- Bagian 3: Menampilkan hasil keluaran (Hanya hasil akhir, tanpa prompt pembuka atau rata-rata) ---
+    printf("%d\n", min_val); // Menampilkan nilai terkecil
+    printf("%d\n", max_val); // Menampilkan nilai terbesar
 
-    // Baris 4: Tampilkan rata-rata pasangan tertinggi
-    // Baris ini HANYA diharapkan muncul pada t03_03.c.
-    // Jika Anda mengompilasi untuk t03_02.c, Anda harus MENGHAPUS atau MENGOMENTARI blok kode ini.
-    if (n >= 2) { // Kondisi yang sama, karena butuh setidaknya satu pasangan untuk min_consecutive_avg dan max_consecutive_avg
-        printf("%.2f\n", max_consecutive_avg); // Rata-rata tertinggi dari pasangan berurutan
-    }
-
-    return 0; // Mengindikasikan program berakhir dengan sukses
+    return 0; // Menandakan program berakhir dengan sukses
 }

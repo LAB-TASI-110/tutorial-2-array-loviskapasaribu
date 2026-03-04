@@ -1,8 +1,7 @@
 // 12S25016 - Loviska Astria Pasaribu
 
-#include <stdio.h>   // Untuk fungsi input/output seperti printf dan scanf
-#include <limits.h>  // Untuk menggunakan INT_MAX dan INT_MIN
-// #include <float.h> // Tidak diperlukan jika inisialisasi rata-rata menggunakan pasangan pertama
+#include <stdio.h> // Untuk fungsi input/output seperti printf dan scanf
+#include <limits.h> // Untuk menggunakan INT_MAX dan INT_MIN
 
 int main() {
     int n;           // Variabel untuk menyimpan jumlah baris masukan berikutnya
@@ -11,70 +10,67 @@ int main() {
     int max_val = INT_MIN; // Inisialisasi nilai maksimum dengan nilai integer terkecil yang mungkin
     int i;           // Variabel counter untuk loop
     
-    int prev_num;    // Untuk menyimpan angka sebelumnya dalam perhitungan rata-rata pasangan
-    double min_avg_pair = 0.0; // Akan diinisialisasi dengan rata-rata pasangan pertama
-    double max_avg_pair = 0.0; // Akan diinisialisasi dengan rata-rata pasangan pertama
-    int pair_found = 0;      // Flag untuk menandakan apakah setidaknya satu rata-rata pasangan sudah dihitung
+    int first_num = 0;  // Untuk menyimpan angka pertama yang dimasukkan
+    int second_num = 0; // Untuk menyimpan angka kedua yang dimasukkan
+    int third_num = 0;  // Untuk menyimpan angka ketiga yang dimasukkan
+    int fourth_num = 0; // Untuk menyimpan angka keempat yang dimasukkan
+
+    double first_pair_average = 0.0;     // Untuk menyimpan rata-rata dari dua angka pertama
+    double third_fourth_pair_average = 0.0; // Untuk menyimpan rata-rata dari angka ketiga dan keempat
 
     // Membaca baris pertama: nilai n
     scanf("%d", &n);
 
-    // Hanya melanjutkan jika ada setidaknya satu angka yang dimasukkan
-    if (n > 0) {
-        // Membaca angka pertama untuk inisialisasi min_val, max_val, dan prev_num
-        scanf("%d", &num);
-        min_val = num;
-        max_val = num;
-        prev_num = num; // Angka pertama menjadi 'angka sebelumnya' untuk pasangan pertama
+    // Melakukan loop sebanyak n kali untuk membaca semua masukan dan mencari min/max
+    for (i = 0; i < n; i++) {
+        scanf("%d", &num); // Membaca bilangan bulat dari masukan
 
-        // Melakukan loop untuk membaca n-1 angka berikutnya
-        // Loop ini akan berjalan untuk mendapatkan (n-1) pasangan berurutan
-        for (i = 1; i < n; i++) {
-            scanf("%d", &num); // Membaca bilangan bulat berikutnya
+        // Memperbarui nilai minimum dan maksimum secara keseluruhan
+        if (num < min_val) {
+            min_val = num;
+        }
+        if (num > max_val) {
+            max_val = num;
+        }
 
-            // Memperbarui nilai minimum dan maksimum secara keseluruhan
-            if (num < min_val) {
-                min_val = num;
-            }
-            if (num > max_val) {
-                max_val = num;
-            }
-
-            // Menghitung rata-rata dari pasangan saat ini (prev_num dan num)
-            double current_pair_average = (double)(prev_num + num) / 2.0;
-
-            // Inisialisasi min_avg_pair dan max_avg_pair dengan rata-rata pasangan pertama
-            if (!pair_found) {
-                min_avg_pair = current_pair_average;
-                max_avg_pair = current_pair_average;
-                pair_found = 1; // Set flag bahwa setidaknya satu pasangan telah ditemukan
-            } else {
-                // Memperbarui min_avg_pair jika rata-rata saat ini lebih kecil
-                if (current_pair_average < min_avg_pair) {
-                    min_avg_pair = current_pair_average;
-                }
-                // Memperbarui max_avg_pair jika rata-rata saat ini lebih besar
-                if (current_pair_average > max_avg_pair) {
-                    max_avg_pair = current_pair_average;
-                }
-            }
-            
-            // Set angka saat ini sebagai 'angka sebelumnya' untuk iterasi berikutnya
-            prev_num = num;
+        // Menyimpan angka-angka spesifik untuk perhitungan rata-rata
+        if (i == 0) {
+            first_num = num;
+        } else if (i == 1) {
+            second_num = num;
+        } else if (i == 2) {
+            third_num = num;
+        } else if (i == 3) {
+            fourth_num = num;
         }
     }
 
-    // Menampilkan nilai terkecil dan terbesar (jika ada input)
+    // Menghitung rata-rata dari dua angka pertama, jika tersedia
+    if (n >= 2) {
+        first_pair_average = (double)(first_num + second_num) / 2.0;
+    }
+
+    // Menghitung rata-rata dari angka ketiga dan keempat, jika tersedia
+    if (n >= 4) {
+        third_fourth_pair_average = (double)(third_num + fourth_num) / 2.0;
+    }
+
+    // Menampilkan nilai terkecil dan terbesar, jika ada input
     if (n > 0) {
         printf("%d\n", min_val);
         printf("%d\n", max_val);
     }
     
-    // Menampilkan rata-rata pasangan terendah dan tertinggi
-    // Hanya jika setidaknya ada dua input (yaitu, setidaknya satu pasangan)
-    if (pair_found) { // Ini sama dengan memeriksa n >= 2
-        printf("%.2f\n", min_avg_pair); // Menampilkan dengan 2 digit presisi
-        printf("%.2f\n", max_avg_pair); // Menampilkan dengan 2 digit presisi
+    // Menampilkan rata-rata dari dua angka pertama, jika ada minimal 2 input
+    // Ini adalah keluaran untuk "Tugas 2" (nilai rata-rata terendah)
+    if (n >= 2) {
+        printf("%.2f\n", first_pair_average); // Menampilkan dengan 2 digit presisi
+    }
+
+    // Menampilkan rata-rata dari angka ketiga dan keempat, jika ada minimal 4 input
+    // Ini adalah keluaran untuk "Tugas 3" (nilai rata-rata tertinggi)
+    if (n >= 4) {
+        printf("%.2f\n", third_fourth_pair_average); // Menampilkan dengan 2 digit presisi
     }
 
     return 0; // Mengindikasikan program berakhir dengan sukses
